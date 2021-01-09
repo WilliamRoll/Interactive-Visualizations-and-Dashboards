@@ -37,6 +37,7 @@ function init(){
         console.log(sampleValues)
         console.log(IDs)
 
+        //bar chart
         var trace = {
             x: sampleValues,
             y: otuIDs,
@@ -59,11 +60,11 @@ function init(){
                 b:30
             },
             bargap: .5
-
-        }
+        };
 
         Plotly.newPlot('bar', data, layout);
 
+        //bubble chart
         var trace2 = {
             x: importedData.samples[0].otu_ids,
             y: importedData.samples[0].sample_values,
@@ -91,6 +92,8 @@ function init(){
 
 d3.selectAll("#selDataset").on("change", optionChanged)
 
+
+//drop down selection function
 function optionChanged(newSample){
 
     d3.json("samples.json").then((data) => {
@@ -99,8 +102,7 @@ function optionChanged(newSample){
         var ddMenu = d3.select("#selDataset");
         var DataSelection = ddMenu.property("value");
 
-        var newData = [];
-
+        //for loop for data selection
         for(var i = 0; i < importedData.names.length; i++){
             if(DataSelection === importedData.names[i]){
                 d3.select("#sample-metadata").selectAll("li")
@@ -118,13 +120,13 @@ function optionChanged(newSample){
                 var sampleValues = importedData.samples[i].sample_values.slice(0,10).reverse();
                 var IDs = importedData.samples[i].otu_ids.slice(0,10).reverse();
                 var otuIDs = IDs.map(d => "OTU " + d);
-                //var otuTopIDs = (importedData.samples[0].otu_ids.slice(0,10));
                 var labels = importedData.samples[i].otu_labels.slice(0,10);
 
                 console.log(sampleValues)
                 console.log(IDs)
                 //console.log(otuTopIDs)
 
+                //bar chart
                 var trace = {
                     x: sampleValues,
                     y: otuIDs,
@@ -152,6 +154,7 @@ function optionChanged(newSample){
 
                 Plotly.newPlot('bar', data, layout);
 
+                //bubble chart
                 var trace2 = {
                     x: importedData.samples[i].otu_ids,
                     y: importedData.samples[i].sample_values,
