@@ -18,8 +18,7 @@ function init(){
             .text(name)
             .property("value");
         });
-        
-    
+
         //populate demographic info
         var li1 = d3.select("#sample-metadata").append("li").text("ID: " + importedData.metadata[0].id)
         var li2 = d3.select("#sample-metadata").append("li").text("Ethnicity: " + importedData.metadata[0].ethnicity)
@@ -29,7 +28,6 @@ function init(){
         var li6 = d3.select("#sample-metadata").append("li").text("Bbtype: " + importedData.metadata[0].bbtype)
         var li7 = d3.select("#sample-metadata").append("li").text("Wfreq: " + importedData.metadata[0].wfreq)
 
-    
         //sample values
         var sampleValues = importedData.samples[0].sample_values.slice(0,10).reverse();
         var IDs = importedData.samples[0].otu_ids.slice(0,10).reverse();
@@ -45,9 +43,6 @@ function init(){
             x: sampleValues,
             y: otuIDs,
             //text: labels,
-            marker: {
-                color: 'blue'
-            },
             type: "bar",
             orientation: "h",
 
@@ -58,8 +53,7 @@ function init(){
         var layout = {
             title: "OTU Data",
             xaxis: { title: "Sample Values"},
-            yaxis: { title: "OTU IDs",
-                    tickvals: IDs},
+            yaxis: { title: "OTU IDs"},
             margin:{
                 l: 100,
                 r:100,
@@ -75,9 +69,37 @@ function init(){
 
 
     });
-
-    
 }
+
+d3.selectAll("#selDataset").on("change", optionChanged)
+
+function optionChanged(newSample){
+
+    d3.json("samples.json").then((data) => {
+        var importedData = data; 
+
+        var ddMenu = d3.select("#selDataset");
+        var DataSelection = ddMenu.property("value");
+
+        var newData = [];
+
+        for(var i = 0; i < importedData.names.length; i++){
+            if(DataSelection === importedData.names[i]){
+                d3.select("#sample-metadata").selectAll("li")
+                    .remove();
+                //populate demographic info
+                var li1 = d3.select("#sample-metadata").append("li").text("ID: " + importedData.metadata[i].id)
+                var li2 = d3.select("#sample-metadata").append("li").text("Ethnicity: " + importedData.metadata[i].ethnicity)
+                var li3 = d3.select("#sample-metadata").append("li").text("Gender: " + importedData.metadata[i].gender)
+                var li4 = d3.select("#sample-metadata").append("li").text("Age: " + importedData.metadata[i].age)
+                var li5 = d3.select("#sample-metadata").append("li").text("Location: " + importedData.metadata[i].location)
+                var li6 = d3.select("#sample-metadata").append("li").text("Bbtype: " + importedData.metadata[i].bbtype)
+                var li7 = d3.select("#sample-metadata").append("li").text("Wfreq: " + importedData.metadata[i].wfreq)
+            }
+        }
+    });
+}
+
 init();
 
 
