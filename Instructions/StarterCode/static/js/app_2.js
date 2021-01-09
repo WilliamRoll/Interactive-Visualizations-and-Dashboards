@@ -31,40 +31,46 @@ function init(){
 
     
         //sample values
-        var sampleValues = importedData.samples[0].sample_values.slice(0.10).reverse();
-        var IDs = importedData.samples[0].otu_ids;
-        var otuTopIDs = (importedData.samples[0].otu_ids.slice(0,10).reverse());
+        var sampleValues = importedData.samples[0].sample_values.slice(0.10);
+        var IDs = importedData.samples[0].otu_ids.slice(0,10);
+        //var otuTopIDs = (importedData.samples[0].otu_ids.slice(0,10));
+        var labels = importedData.samples[0].otu_labels.slice(0.10);
 
         console.log(sampleValues)
         console.log(IDs)
-        console.log(otuTopIDs)
-        
-        var otuIDs = otuTopIDs.map(otu => "OTU " + otu);
+        //console.log(otuTopIDs)
 
-        var labels =  data.samples[0].otu_labels.slice(0,10);
-        var trace= {
+        var trace = {
             x: sampleValues,
-            y: OTUid,
+            y: IDs,
             text: labels,
             marker: {
-            color: 'blue'},
-            type:"bar",
+                color: 'blue'
+            },
+            type: "bar",
             orientation: "h",
+
         };
+        
         var data = [trace];
 
         var layout = {
-            title: "OTU data",
-            yaxis:{
-                tickmode:"linear",
-            },
-            margin: {
+            title: "OTU Data",
+            xaxis: { title: "Sample Values"},
+            yaxis: { title: "OTU IDs",
+                    tickvals: sampleValues},
+            margin:{
                 l: 100,
-                r: 100,
-                t: 100,
-                b: 30
-            }
-        };
+                r:100,
+                t:100,
+                b:30
+            },
+            bargap: .5
+
+        }
+
+        Plotly.newPlot('bar', data, layout);
+        
 
 
     });
