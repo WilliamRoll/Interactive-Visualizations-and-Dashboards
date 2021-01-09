@@ -31,10 +31,11 @@ function init(){
 
     
         //sample values
-        var sampleValues = importedData.samples[0].sample_values.slice(0.10);
-        var IDs = importedData.samples[0].otu_ids.slice(0,10);
+        var sampleValues = importedData.samples[0].sample_values.slice(0,10).reverse();
+        var IDs = importedData.samples[0].otu_ids.slice(0,10).reverse();
+        var otuIDs = IDs.map(d => "OTU " + d);
         //var otuTopIDs = (importedData.samples[0].otu_ids.slice(0,10));
-        var labels = importedData.samples[0].otu_labels.slice(0.10);
+        var labels = importedData.samples[0].otu_labels.slice(0,10);
 
         console.log(sampleValues)
         console.log(IDs)
@@ -42,8 +43,8 @@ function init(){
 
         var trace = {
             x: sampleValues,
-            y: IDs,
-            text: labels,
+            y: otuIDs,
+            //text: labels,
             marker: {
                 color: 'blue'
             },
@@ -58,7 +59,7 @@ function init(){
             title: "OTU Data",
             xaxis: { title: "Sample Values"},
             yaxis: { title: "OTU IDs",
-                    tickvals: sampleValues},
+                    tickvals: IDs},
             margin:{
                 l: 100,
                 r:100,
