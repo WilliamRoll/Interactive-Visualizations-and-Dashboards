@@ -42,7 +42,7 @@ function init(){
         var trace = {
             x: sampleValues,
             y: otuIDs,
-            //text: labels,
+            text: labels,
             type: "bar",
             orientation: "h",
 
@@ -65,6 +65,28 @@ function init(){
         }
 
         Plotly.newPlot('bar', data, layout);
+
+        var trace2 = {
+            x: importedData.samples[0].otu_ids,
+            y: importedData.samples[0].sample_values,
+            mode: "markers",
+            marker:{
+                size: importedData.samples[0].sample_values,
+                color: importedData.samples[0].otu_ids,
+            },
+            text: importedData.samples[0].otu_labels
+        };
+        
+        var data2 = [trace2];
+
+        var layout2 = {
+            title: "OTU Data",
+            showlegend: false,
+            height: 600,
+            width: 1000
+        };
+
+        Plotly.newPlot("bubble", data2, layout2);
         
     });
 }
