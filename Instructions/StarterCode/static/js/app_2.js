@@ -32,12 +32,10 @@ function init(){
         var sampleValues = importedData.samples[0].sample_values.slice(0,10).reverse();
         var IDs = importedData.samples[0].otu_ids.slice(0,10).reverse();
         var otuIDs = IDs.map(d => "OTU " + d);
-        //var otuTopIDs = (importedData.samples[0].otu_ids.slice(0,10));
         var labels = importedData.samples[0].otu_labels.slice(0,10);
 
         console.log(sampleValues)
         console.log(IDs)
-        //console.log(otuTopIDs)
 
         var trace = {
             x: sampleValues,
