@@ -2,7 +2,7 @@
 function init(){
     
     //D3 to select the dropdown menu
-    var dropDown = d3.select("#selDataset")
+    var dropdownMenu = d3.select("#selDataset")
 
     //Reads the data from the json file
     d3.json("samples.json").then((data) => {
@@ -13,8 +13,10 @@ function init(){
 
         //use names to populate dropdown using for loop
         importedData.names.forEach(function(n){
-            dropdownMenu.property("value")
-        })
+            dropdownMenu
+            .append("option")
+            .text(n).property("value");
+        });
         
     });
 }
